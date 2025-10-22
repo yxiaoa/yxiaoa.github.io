@@ -4,13 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>YXY</title>
+  <title>嵌入式开发设计模式——寄存器访问 | YXY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YXY">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="嵌入式软件和PC软件一个很大的不同就是存在寄存器访问。 从软件的视角来看，寄存器就是一个Memory地址。现在使用最多的是32位CPU，因此寄存器大多也是32位，当然32位CPU也可以按照8位或64位宽度访问寄存器，但这一点和本文讨论的重点无关。 寄存器的值会作用到硬件上，反之硬件的状态更新也会改变寄存器值，因此读写寄存器必须使用volatile关键字，保证CPU确实访问该地址了。一般会使用类型定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式开发设计模式——寄存器访问">
+<meta property="og:url" content="http://example.com/2025/10/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE/index.html">
 <meta property="og:site_name" content="YXY">
+<meta property="og:description" content="嵌入式软件和PC软件一个很大的不同就是存在寄存器访问。 从软件的视角来看，寄存器就是一个Memory地址。现在使用最多的是32位CPU，因此寄存器大多也是32位，当然32位CPU也可以按照8位或64位宽度访问寄存器，但这一点和本文讨论的重点无关。 寄存器的值会作用到硬件上，反之硬件的状态更新也会改变寄存器值，因此读写寄存器必须使用volatile关键字，保证CPU确实访问该地址了。一般会使用类型定">
 <meta property="og:locale">
+<meta property="article:published_time" content="2025-10-22T08:45:53.000Z">
+<meta property="article:modified_time" content="2025-10-22T11:16:45.172Z">
 <meta property="article:author" content="Xiao Yang">
 <meta name="twitter:card" content="summary">
   
@@ -67,9 +71,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-嵌入式开发设计模式——寄存器访问" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-嵌入式开发设计模式——寄存器访问" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/10/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE/" class="article-date">
   <time class="dt-published" datetime="2025-10-22T08:45:53.000Z" itemprop="datePublished">2025-10-22</time>
@@ -82,8 +84,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/10/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE/">嵌入式开发设计模式——寄存器访问</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      嵌入式开发设计模式——寄存器访问
     </h1>
   
 
@@ -119,84 +121,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-记录我用的工具" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/05/09/%E8%AE%B0%E5%BD%95%E6%88%91%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/" class="article-date">
-  <time class="dt-published" datetime="2025-05-09T02:46:48.000Z" itemprop="datePublished">2025-05-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/05/09/%E8%AE%B0%E5%BD%95%E6%88%91%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/">记录我用的工具</a>
-    </h1>
+    <a href="/2025/05/09/%E8%AE%B0%E5%BD%95%E6%88%91%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">记录我用的工具</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>开始写第一篇blog，就记录自己使用工具吧</p>
-<h2 id="PC-Windows"><a href="#PC-Windows" class="headerlink" title="PC(Windows)"></a>PC(Windows)</h2><ol>
-<li>Redmine：问题解决管理、项目管理，相比其他工具的好处是开源（免费），自己服务器搭建安全可靠</li>
-<li>OneNote + OneMore：笔记。最符合纸质笔记本的使用习惯。数据可离线。永远不担心工具不提供服务</li>
-<li>VSCode + Copilot：配合扩展程序写代码、写blog</li>
-<li>Everything：文件搜索，使用正则表达式可满足任意搜索</li>
-<li>Zotero：文献管理，不多说，学术必备。</li>
-<li>Treesheets：树状结构表格工具，比Excel轻量，用于记录零散笔记或整理信息，例如读书&#x2F;课程笔记</li>
-<li>USB Tree Viewer：详细显示USB设备，比自带的设备管理器更清楚</li>
-<li>Q-Dir：四格视图文件浏览器</li>
-<li>MassCode：代码片段管理工具，没怎么用起来，现在有了AI更没用了</li>
-<li>CareUEyes：屏幕护眼程序</li>
-<li>PowerToys：微软自家的系统扩展工具</li>
-<li>AdGuard：广告屏蔽，感觉用处不大，不过也不贵就一直开着吧</li>
-<li>小鹤音形：音形输入法，告别翻页选字</li>
-<li>SQLiteStudio：使用sqlite记录个人数据</li>
-<li>SumatraPDF：轻量PDF阅读器，使用OneDrive同步实现多端阅读进度同步</li>
-<li>KeePassXC：密码管理器</li>
-<li>WinMerge：代码对比，没BeyondCompare好用，但是免费</li>
-<li>FreeFileSync：文件同步工具</li>
-</ol>
-<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><ol>
-<li>多邻国：学各种语言</li>
-<li>随手记：记账软件，不如新出的软件简洁，但大公司出品，不担心不提供服务</li>
-<li>时间日志：时间记录软件</li>
-<li>Puzzles：一些智力小游戏，如数独</li>
-<li>白描：证件照、扫描文档</li>
-</ol>
-<h2 id="Cross"><a href="#Cross" class="headerlink" title="Cross"></a>Cross</h2><ol>
-<li>坚果云：同步文件，免费额度够用。</li>
-<li>OneDrive：同步文件和备份照片，家庭版1T空间，性价比相当高，缺点是时不时遇到网络问题，目前还可以忍受。</li>
-<li>滴答清单：任务管理。一年139。功能包括习惯、番茄钟、日历、标签等，暂未发现其他更好用的软件。</li>
-<li>Flomo：卡片笔记、闪念，但还没用起来</li>
-</ol>
-<p>后续分享日常如何使用工具</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/05/09/%E8%AE%B0%E5%BD%95%E6%88%91%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/" data-id="cmag84dkj0000r0ld8k3dajg9" data-title="记录我用的工具" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
 
 
 </section>
