@@ -71,6 +71,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-嵌入式开发设计模式——状态机" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/12/18/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA/" class="article-date">
+  <time class="dt-published" datetime="2025-12-18T11:15:38.000Z" itemprop="datePublished">2025-12-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/12/18/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA/">嵌入式开发设计模式——状态机</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>状态机应该是最常用的设计模式了，而且在各种开发语言中，，甚至是硬件描述语言都常用。</p>
+<h2 id="状态机简单概念"><a href="#状态机简单概念" class="headerlink" title="状态机简单概念"></a>状态机简单概念</h2><p>状态机非常简单和直观，有两个基本概念：</p>
+<ol>
+<li>状态(State)：一个对象在某个时刻或某段时间，具有某种稳定的属性，就称其在某个状态。例如灯有“亮”、“灭”两种状态，门有“开”、“关”两种状态等。</li>
+<li>迁移(Transition)：从一种状态变到另一种状态就叫迁移。例如灯从亮到灭、从灭到亮，门从开到关、从关到开。</li>
+</ol>
+<p>把状态和迁移画出来就成了状态图。从上面的例子也可以想到，有时迁移不会自动发生，例如门从关到开（也就是开门）是因为发生了“要出门”这个条件，并且迁移伴随着动作，也就是开门这个动作。</p>
+<p>那么就可以画一个简单的状态图，用&#x2F;前表示发生条件，&#x2F;后表示动作</p>
+<img  src=http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuG8oIb8LdkvfWB5QDtC1iOAkhXr8LC5AuSMongVjkrvENw4Fv0CfBf0mM1gep4hXwVPDCEdMpI1fXzIy5A390000>
+
+<p>PS.这里的重点为了表现状态机的概念，实际问题中条件和动作可能更加复杂，例如需要区分准入条件和准出条件、进入动作和退出动作等。</p>
+<h2 id="状态机设计模式"><a href="#状态机设计模式" class="headerlink" title="状态机设计模式"></a>状态机设计模式</h2><p>当需要描述的对象或问题存在多种状态以及多种条件判断时，就可以考虑状态机模式了。画出状态图可以非常直观理解其变化。</p>
+<p>状态机有横写和竖写两种方式，区别在于考虑的重点是在状态还是迁移上。有时对象是状态多但迁移条件简单，有时是状态少但迁移条件多。根据写出的代码长度就能看出来了，不需要特别区分。</p>
+<p>上面门的例子用状态机来实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    OPENED,</span><br><span class="line">    CLOSED</span><br><span class="line">&#125; <span class="type">state_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">state_t</span> door_state;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">door</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (door_state) &#123;</span><br><span class="line">    <span class="keyword">case</span> CLOSED:</span><br><span class="line">        <span class="keyword">if</span> (want_out()) &#123;</span><br><span class="line">            open_door();</span><br><span class="line">            door_state = OPENED;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OPENED:</span><br><span class="line">        <span class="keyword">if</span> (is_out()) &#123;</span><br><span class="line">            close_door();</span><br><span class="line">            door_state = CLOSED;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">// error handling</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一种方式，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">want_out</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (door_state == CLOSED) &#123;</span><br><span class="line">        open_door();</span><br><span class="line">        door_state = OPENED;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* door is open, nothing to do */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> is_out(<span class="type">void</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (door_state == OPENED) &#123;</span><br><span class="line">        close_door();</span><br><span class="line">        door_state = CLOSED;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* door is closed, nothing to do */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>像之前所说的，标准的状态机模式实现可能还包括很多其他条件和动作，但在实践中通常不会每个迁移每个状态都会用到所有的条件和动作，因此只需要记住状态和迁移的概念，在实现中只写用到的部分就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/12/18/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA/" data-id="cuid1KIxfiLgXMApZIcP_9UiQ" data-title="嵌入式开发设计模式——状态机" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-嵌入式开发设计模式——代理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/12/06/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E4%BB%A3%E7%90%86/" class="article-date">
@@ -96,11 +156,11 @@
         <p>在面向对象设计模式中，存在代理模式（Proxy Pattern）和委托模式（Delegation Pattern），二者有很大相似性，但在类的实现上存在少许不同。</p>
 <p>而在C语言中，由于天生没有类的概念，因此可以认为这两种模式是一样的。其目的都是为了调用方提供一种动态且一致的接口。</p>
 <p>不管是代理还是委托，特点都是调用方自己不做事，把要做的事交给代理去做。</p>
-<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>某个产品需要两种指令格式，并需要能够随时切换到另一种格式。</p>
-<h4 id="通常实现"><a href="#通常实现" class="headerlink" title="通常实现"></a>通常实现</h4><p>因为需要软件运行期间动态切换，所以需要实现两种格式的处理函数，并记录当前使用哪种模式。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>某个产品需要两种指令格式，并需要能够随时切换到另一种格式。</p>
+<h2 id="通常实现"><a href="#通常实现" class="headerlink" title="通常实现"></a>通常实现</h2><p>因为需要软件运行期间动态切换，所以需要实现两种格式的处理函数，并记录当前使用哪种模式。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> mode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_mode_0_proc</span><span class="params">(<span class="type">char</span> *buf)</span> &#123;</span><br><span class="line">    <span class="comment">/* Implementation */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_mode_1_proc</span><span class="params">(<span class="type">char</span> *buf)</span> &#123;</span><br><span class="line">    <span class="comment">/* Implementation */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_proc</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="comment">/* Receive messages to buf */</span></span><br><span class="line">    <span class="keyword">if</span> (mode == <span class="number">0</span>) &#123;</span><br><span class="line">        cmd_mode_0_proc(buf);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cmd_mode_1_proc(buf);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">change_mode</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">    mode = value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="代理实现"><a href="#代理实现" class="headerlink" title="代理实现"></a>代理实现</h4><p>将处理函数封装起来，给调用方统一接口。</p>
+<h2 id="代理实现"><a href="#代理实现" class="headerlink" title="代理实现"></a>代理实现</h2><p>将处理函数封装起来，给调用方统一接口。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">   <span class="type">void</span> (*proc)(<span class="type">char</span> *buf);</span><br><span class="line">&#125; <span class="type">cmd_proxy_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">cmd_proxy_t</span> proxy;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_mode_0_proc</span><span class="params">(<span class="type">char</span> *buf)</span> &#123;</span><br><span class="line">    <span class="comment">/* Implementation */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_mode_1_proc</span><span class="params">(<span class="type">char</span> *buf)</span> &#123;</span><br><span class="line">    <span class="comment">/* Implementation */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">change_mode</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</span><br><span class="line">        proxy.proc = cmd_mode_0_proc;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        proxy.proc = cmd_mode_1_proc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cmd_proc</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="comment">/* Receive messages to buf */</span></span><br><span class="line">    proxy.proc(buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>代理模式的实现将处理函数的选择从调用方移出。对调用方来说，简化了处理流程，只要交给代理去完成即可。而具体应该调用哪种处理流程是由代理决定的。</p>
@@ -466,6 +526,10 @@
       <ul>
         
           <li>
+            <a href="/2025/12/18/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA/">嵌入式开发设计模式——状态机</a>
+          </li>
+        
+          <li>
             <a href="/2025/12/06/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E4%BB%A3%E7%90%86/">嵌入式开发设计模式——代理</a>
           </li>
         
@@ -479,10 +543,6 @@
         
           <li>
             <a href="/2025/11/06/mklink%E2%80%94%E2%80%94Windows%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E7%A5%9E%E5%99%A8/">mklink——Windows文件同步神器</a>
-          </li>
-        
-          <li>
-            <a href="/2025/10/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BF%E9%97%AE/">嵌入式开发设计模式——寄存器访问</a>
           </li>
         
       </ul>
